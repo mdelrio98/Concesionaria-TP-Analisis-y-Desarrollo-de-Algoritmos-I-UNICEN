@@ -75,7 +75,7 @@ void lista<T>::cursor_al_principio(){
 }
 
 template <typename T>
-const T & lista<T>::recuperar_elemento()const{
+T & lista<T>::recuperar_elemento()const{
     return cursor_interno->elemento;
 }
 
@@ -157,9 +157,14 @@ void lista<T>::mostrar_elementos(){
         cursor = cursor->sig;
     }
 }
-
+template <typename T>
+lista<T> & lista<T>::operator = (const lista & L){
+    primero = L.primero;
+    cursor_interno = L.cursor_interno;
+    cantidad_elementos = L.cantidad_elementos;
+    return *this;
+}
 
 
 template class lista<string>;
 template class lista<Auto>;
-template class lista<Auto*>;

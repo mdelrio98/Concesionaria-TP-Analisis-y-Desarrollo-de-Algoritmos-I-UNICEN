@@ -19,11 +19,12 @@ class lista
         void eliminar_lista();//MOD
         bool lista_vacia();//OBS
         void cursor_al_principio();//MOD
-        const T & recuperar_elemento()const;//OBS
+         T & recuperar_elemento()const;//OBS
         void avanzar_cursor();//MOD
         const T & recuperar_lista(int iteraciones)const;//OBS
         void mostrar_elementos();
         void mostrar_elemento(const T *  elem);
+        lista & operator = (const lista & L);
     private:
         struct Nodo{
             T elemento;

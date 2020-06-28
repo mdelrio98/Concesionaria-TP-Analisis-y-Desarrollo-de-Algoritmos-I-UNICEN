@@ -94,3 +94,30 @@ bool Auto::operator != (const Auto & A) const {
     }
     return false;
 }
+
+Auto & Auto::operator = (const Auto & A){
+    modelo = A.getmodelo();
+    marca = A.getmarca();
+    patente = A.getpatente();
+    precio = A.getprecio();
+    caracteristicas = A.getcaracteristicas();
+    return *this;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

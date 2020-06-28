@@ -23,6 +23,7 @@ class Auto
         bool operator > (const Auto & A) const;
         bool operator == (const Auto & A) const;
         bool operator != (const Auto & A) const;
+        Auto & operator = (const Auto & A);
 
     private:
         int modelo;

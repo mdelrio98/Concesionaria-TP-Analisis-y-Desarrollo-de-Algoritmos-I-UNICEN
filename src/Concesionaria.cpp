@@ -7,8 +7,6 @@
 using namespace std;
 
 Concesionaria::Concesionaria(){
-
-
     //ctor
 }
 
@@ -18,6 +16,11 @@ Concesionaria::~Concesionaria(){
     //autos.eliminar_lista();
 }
 
+void Concesionaria::consulta_mayor_menor(Auto * autos[],int inicio,int fin){
+
+    autos[0] = s.get_Mayor_Rango(inicio,fin);
+    autos[1] = s.get_Menor_Rango(inicio,fin);
+}
 
 void  Concesionaria::mostrar_lista(){
     for(int i =0 ;i < 20 ;i++){
@@ -93,6 +96,9 @@ void Concesionaria::procesar_archivo_entrada(string origen)
             }
             nuevo_auto(a1);
         }
+        cout<<"no cargo segmentre"<<endl;
+        s.set_SegmentTree(modelos);
+        cout<<"cargo segmentre"<<endl;
     }
 }
 
