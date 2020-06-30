@@ -44,12 +44,12 @@ SegmentTree::NodoTree *  SegmentTree::armar_SegmentTree(lista<Auto> modelos[],in
             Auto * caro = NULL;
             Auto * barato = NULL;
 
-            if(l->mayor > r->mayor)
+            if(l->mayor->getprecio() > r->mayor->getprecio())
                 caro = l->mayor;
             else
                 caro = r->mayor;
 
-            if(l->menor < r->menor)
+            if(l->menor->getprecio() < r->menor->getprecio())
                 barato = l->menor;
             else
                 barato = r->menor;
@@ -96,7 +96,7 @@ Auto * SegmentTree::getMenor(lista<Auto> modelos[],int mod){
     while(i < modelos[mod].get_cantelementos()){
 
         Auto * aux1 = &(modelos[mod].recuperar_elemento());
-        if(menor->getprecio() < aux1->getprecio()){
+        if(menor->getprecio() > aux1->getprecio()){
             menor = aux1;
             return menor;
         }
@@ -106,66 +106,60 @@ Auto * SegmentTree::getMenor(lista<Auto> modelos[],int mod){
     return menor;
 }
 
-Auto * SegmentTree::get_Menor_Rango(int ini,int fin){
-    Auto * barato;
-    barato = encontrar_Menor(this->raiz,ini,fin);
-
-    return barato;
+void SegmentTree::get_MayorMenor(Auto * autos[],int ini_user,int fin_user){
+    Auto * caro = new Auto(0,"1","asd",0);
+    Auto * barato= new Auto(0,"0","asd",9999);
+    cout<<"entra encontrar"<<endl;
+    encontrar_MayorMenor(this->raiz,caro,barato,ini_user,fin_user);
+    cout<<"setea caro "<<caro->getpatente()<<"/"<<caro->getmodelo()<<"/"<<caro->getprecio()<<endl;
+    autos[0] = caro;
+    cout<<"setea barato"<<barato->getpatente()<<"/"<<barato->getmodelo()<<"/"<<barato->getprecio()<<endl;
+    autos[1] = barato;
 }
 
-Auto * SegmentTree::encontrar_Menor(NodoTree* &s,int ini,int fin){
-        //cout<<"MENOR"<<endl;
-        //cout<<"[ini:"<<ini<<"; fin:"<<fin<<"]"<<endl;
-        //cout<<"[Sini:"<<s->modelo_inicio<<"; Sfin:"<<s->modelo_fin<<"]"<<endl;
-        if((s->modelo_inicio == ini) && (s->modelo_fin == fin))
-            return s->menor;//HOJA
-
-        int mid = (s->modelo_inicio + s->modelo_fin)/2;//MITAD
-
-        if((ini <= mid) && (fin <= mid)) //IZQUIERDA
-            s->left->menor = encontrar_Menor(s->left,ini,fin);
-
-        if((ini > mid) && (fin > mid)) //DERECHA
-            s->right->menor = encontrar_Menor(s->right,ini,fin);
-
-        if(( (ini <= mid) && (fin > mid) ) || ( (ini > mid) && (fin <= mid)) );
-            s->left->menor = encontrar_Menor(s->left,ini,fin);
-            s->right->menor = encontrar_Menor(s->right,ini,fin);
-
-        return min(s->left->menor,s->right->menor);
-        //MINIMO DE UN RANGO
+void SegmentTree::combina(NodoTree* &s, Auto * &actual_mayor, Auto * &actual_menor)const{
+    if(s->mayor->getprecio() > actual_mayor->getprecio()){
+        actual_mayor = s->mayor;
+        cout<<"Cambio mayor en combina"<<endl;
+    }
+    if(s->menor->getprecio() < actual_menor->getprecio()){
+        actual_menor = s->menor;
+        cout<<"Cambio menor en combina"<<endl;
+    }
 }
 
-Auto * SegmentTree::get_Mayor_Rango(int ini,int fin){
-    Auto * caro;
-    caro = encontrar_Mayor(this->raiz,ini,fin);
-    return caro;
-}
+void SegmentTree::encontrar_MayorMenor(NodoTree* s,Auto * &actual_mayor,Auto * &actual_menor,int ini_user,int fin_user)const{
+    if(s != NULL){
+        cout<<"[(iniuser: "<<ini_user<<"; finuser: "<<fin_user<<")"<<endl;
+        cout<<"(stini: "<<s->modelo_inicio<<"; stfin: "<<s->modelo_fin<<")]"<<endl;
 
-Auto * SegmentTree::encontrar_Mayor(NodoTree* &s,int ini,int fin){
-        cout<<"MAYOR"<<endl;
-        cout<<"[ini:"<<ini<<"; fin:"<<fin<<"]"<<endl;
-        cout<<"[Sini:"<<s->modelo_inicio<<"; Sfin:"<<s->modelo_fin<<"]"<<endl;
-
-        if((s->modelo_inicio == ini) && (s->modelo_fin == fin))
-            return s->mayor;//DENTRO DEL RANGO
-        else if(((s->modelo_inicio < ini) && (s->modelo_fin < ini)) ||((s->modelo_inicio > fin) && (s->modelo_fin > fin)))
-            return NULL;// FUERA DE RANGO
-        else{
-            int mid = (s->modelo_inicio + s->modelo_fin)/2;//MITAD
-
-            if((ini <= mid) && (fin <= mid)) //IZQUIERDA
-                s->left->mayor = encontrar_Mayor(s->left,ini,fin);
-
-            if((ini > mid) && (fin > mid)) //DERECHA
-                s->right->mayor = encontrar_Mayor(s->right,ini,fin);
-
-            if(( (ini <= mid) && (fin > mid) ) || ( (ini > mid) && (fin <= mid)) ){// CASO DOS NODOS SEPARADOS POR LA MITAD
-                s->left->mayor = encontrar_Mayor(s->left,ini,fin);
-                s->right->mayor = encontrar_Mayor(s->right,ini,fin);
-            }
-            return min(s->left->mayor,s->right->mayor);//MINIMO DE UN RANGO
+        if( (ini_user == s->modelo_inicio) && (fin_user == s->modelo_fin) ){ // NODO IGUAL AL RANGO
+            cout<<"(Parado en el rango1)"<<endl;
+            actual_mayor = s->mayor;
+            actual_menor = s->menor;
+            cout<<"(Parado en el rango2)"<<endl;
         }
+        else{
+                if((  ini_user <= s->modelo_inicio ) && ( s->modelo_fin <= fin_user )){
+                    cout<<"Entra combina"<<endl;
+                    combina(s,actual_mayor,actual_menor);
+                }
+                else{
+                    int mid = ( s->modelo_inicio + s->modelo_fin ) / 2 ;
+                    if( ini_user <= mid ){//IZQUIERDA
+                        cout<<"izquierda"<<endl;
+                        encontrar_MayorMenor(s->left,actual_mayor,actual_menor,ini_user,fin_user);
+                         cout<<"sale izquierda"<<endl;
+                    }
+                    if( fin_user > mid ){//DERECHA
+                        cout<<"derecha"<<endl;
+                        encontrar_MayorMenor(s->right,actual_mayor,actual_menor,ini_user,fin_user);
+                        cout<<"sale derecha"<<endl;
+                    }
+                }
+        }
+        cout<<"[(actual mayor: "<<actual_mayor->getpatente()<<"; actual menor: "<<actual_menor->getpatente()<<")]"<<endl;
+    }
 }
 
 

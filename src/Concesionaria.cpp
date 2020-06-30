@@ -12,14 +12,12 @@ Concesionaria::Concesionaria(){
 
 Concesionaria::~Concesionaria(){
     //dtor
-    //delete mas_caro;
     //autos.eliminar_lista();
 }
 
 void Concesionaria::consulta_mayor_menor(Auto * autos[],int inicio,int fin){
-
-    autos[0] = s.get_Mayor_Rango(inicio,fin);
-    autos[1] = s.get_Menor_Rango(inicio,fin);
+    cout<<endl;
+    s.get_MayorMenor(autos,inicio,fin);
 }
 
 void  Concesionaria::mostrar_lista(){

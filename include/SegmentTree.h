@@ -16,8 +16,7 @@ class SegmentTree
         virtual ~SegmentTree();
         Auto * getMenor(lista<Auto> modelos[], int mod);
         Auto * getMayor(lista<Auto> modelos[], int mod);
-        Auto * get_Menor_Rango(int ini,int fin);
-        Auto * get_Mayor_Rango(int ini,int fin);
+        void get_MayorMenor(Auto * autos[],int ini_user,int fin_user);
         void set_SegmentTree(lista<Auto> modelos[]);
 
     private:
@@ -32,8 +31,8 @@ class SegmentTree
         NodoTree * raiz;
         NodoTree * armar_SegmentTree(lista<Auto> modelos[],int ini,int fin);
         NodoTree * crea_NodoTree(int ini,int fin);
-        Auto * encontrar_Menor(NodoTree* &s,int ini,int fin);
-        Auto * encontrar_Mayor(NodoTree* &s,int ini,int fin);
+        void combina(NodoTree* &s, Auto * &actual_mayor, Auto * &actual_menor)const;
+        void encontrar_MayorMenor(NodoTree* s,Auto * &actual_mayor,Auto * &actual_menor,int ini_user,int fin_user)const;
 };
 
 #endif // SEGMENTTREE_H

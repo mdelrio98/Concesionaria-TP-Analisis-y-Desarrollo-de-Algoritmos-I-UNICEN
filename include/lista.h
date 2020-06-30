@@ -24,7 +24,7 @@ class lista
         const T & recuperar_lista(int iteraciones)const;//OBS
         void mostrar_elementos();
         void mostrar_elemento(const T *  elem);
-        lista & operator = (const lista & L);
+        lista<T> & operator = (const lista & L);
     private:
         struct Nodo{
             T elemento;
