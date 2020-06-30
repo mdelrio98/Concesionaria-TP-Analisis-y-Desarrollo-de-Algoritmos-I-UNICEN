@@ -32,7 +32,8 @@ class SegmentTree
         NodoTree * armar_SegmentTree(lista<Auto> modelos[],int ini,int fin);
         NodoTree * crea_NodoTree(int ini,int fin);
         void combina(NodoTree* &s, Auto * &actual_mayor, Auto * &actual_menor)const;
-        void encontrar_MayorMenor(NodoTree* s,Auto * &actual_mayor,Auto * &actual_menor,int ini_user,int fin_user)const;
+        void encontrar_MayorMenor(NodoTree * s,Auto * &actual_mayor,Auto * &actual_menor,int ini_user,int fin_user)const;
+        void podar(NodoTree * &nodo);
 };
 
 #endif // SEGMENTTREE_H

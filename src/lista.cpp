@@ -15,9 +15,9 @@ lista<T>::lista(){
 }
 template <typename T>
 lista<T>::~lista(){
-    cout<<"elimina antes"<<this->primero->elemento<<endl;
+    //cout<<"elimina antes"<<this->primero->elemento<<endl;
     //eliminar_lista();
-    cout<<"elimina despues"<<endl;
+    //cout<<"elimina despues"<<endl;
 }
 template <typename T>
 int lista<T>::get_cantelementos()const{

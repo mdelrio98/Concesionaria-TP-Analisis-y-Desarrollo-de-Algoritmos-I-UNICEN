@@ -12,11 +12,9 @@ Concesionaria::Concesionaria(){
 
 Concesionaria::~Concesionaria(){
     //dtor
-    //autos.eliminar_lista();
 }
 
 void Concesionaria::consulta_mayor_menor(Auto * autos[],int inicio,int fin){
-    cout<<endl;
     s.get_MayorMenor(autos,inicio,fin);
 }
 
@@ -75,7 +73,7 @@ void Concesionaria::procesar_archivo_entrada(string origen)
             pos_final = linea.find(';', pos_inicial);
             float precio = atof(linea.substr(pos_inicial, pos_final - pos_inicial).c_str());
 
-            cout << modelo << "-"<<marca<<"-"<<patente<<"-"<<precio<<endl;
+            //cout << modelo << "-"<<marca<<"-"<<patente<<"-"<<precio<<endl;
             //TO DO: Informacion general del auto.
 
             Auto  a1(modelo,patente,marca,precio);
@@ -94,9 +92,9 @@ void Concesionaria::procesar_archivo_entrada(string origen)
             }
             nuevo_auto(a1);
         }
-        cout<<"no cargo segmentre"<<endl;
+        //cout<<"no cargo segmentre"<<endl;
         s.set_SegmentTree(modelos);
-        cout<<"cargo segmentre"<<endl;
+        //cout<<"cargo segmentre"<<endl;
     }
 }
 
